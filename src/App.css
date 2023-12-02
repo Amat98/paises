@@ -1,0 +1,19 @@
+main {
+  color: white;
+  /* background-color: rgb(106, 135, 106); */
+  padding: 10px 0;
+}
+
+h4 {
+  font-size: 30px;
+  color: rgb(0, 154, 255);
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* Número de líneas que deseas mostrar */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+p {
+  font-size: 25px;
+  margin: 0;
+}
