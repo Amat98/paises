@@ -85,7 +85,7 @@ const CountryList = () => {
     setNodal(true);
     setCountryDetails(details);
   };
-  console.log(countryDetails.states)
+  console.log(countryDetails.states);
 
   const handleCloseCountryDetails = () => {
     setNodal(!nodal);
@@ -116,7 +116,6 @@ const CountryList = () => {
 
     const fetchImages = async () => {
       const images = {};
-      // console.log(data)
       for (const country of data.countries) {
         try {
           const response = await axios.get(
@@ -227,9 +226,18 @@ const CountryList = () => {
             </span>
           </h4>
           <h4>Population:</h4>
-          <ul className="statesNodal">Region: {countryDetails.states.map((state) => (
-            <span className="countryDetails__span__nodal">{state.name}, </span>
-          ))}</ul>
+          <ul className="statesNodal">
+            Region:{" "}
+            {countryDetails.states ? (
+              countryDetails.states.map((state) => (
+                <span key={state.name} className="countryDetails__span__nodal">
+                  {state.name},{" "}
+                </span>
+              ))
+            ) : (
+              <span>No hay datos de regiones disponibles.</span>
+            )}
+          </ul>
         </div>
       </article>
       {loading ? (
