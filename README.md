@@ -15,13 +15,4 @@ Este proyecto React, denominado "Países del Mundo", utiliza tecnologías modern
 - **Búsqueda de Países:** Busca países por nombre de manera eficiente.
 - **Filtrado por Continente:** Filtra países según el continente al que pertenecen.
 - **Visualización Detallada:** Proporciona información detallada sobre un país seleccionado, incluyendo su capital, idioma, moneda y regiones.
-
-## Instalación y Uso
-
-1. Clona el repositorio.
-2. Instala las dependencias utilizando el comando `npm install`.
-3. Inicia la aplicación con `npm start`.
-
-## Notas Adicionales
-
-- Las imágenes de los países se obtienen mediante la API de Pixabay.
+- **Responsive** 
