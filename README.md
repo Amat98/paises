@@ -7,7 +7,7 @@ Este proyecto React, denominado "Países del Mundo", utiliza tecnologías modern
 - **React:** Biblioteca de JavaScript para construir interfaces de usuario interactivas y dinámicas.
 - **Apollo Client:** Cliente para consumir APIs GraphQL en aplicaciones React.
 - **Axios:** Librería para realizar peticiones HTTP.
-- **GraphQL:** Lenguaje de consulta y manipulación de datos para APIs, utilizado en conjunto con Apollo Client.
+- **GraphQL:** Lenguaje de consulta y manipulación de datos para APIs, utilizado en conjunto con Apollo Client. (Toco aprender GraphQL y Apollo Cliente)
 - **CSS:** Lenguaje de estilo utilizado para dar formato y diseño a la interfaz.
 
 ## Características Destacadas
