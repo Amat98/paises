@@ -8,9 +8,16 @@ const GET_COUNTRIES = gql`
     countries {
       name
       capital
+      languages {
+        name
+      }
       continent {
         name
       }
+      states {
+        name
+      }
+      currency
     }
   }
 `;
@@ -21,10 +28,13 @@ const CountryList = () => {
   const [countryImages, setCountryImages] = useState({});
   const [continents, setContinents] = useState(false);
   const [selectedContinents, setSelectedContinents] = useState([]);
+  const [countryDetails, setCountryDetails] = useState({});
+  const [nodal, setNodal] = useState(false);
 
   const continentsData = [
     { name: "Europa", image: "europa.jpg", apiName: "Europe" },
-    { name: "America", image: "america.jpg", apiName: "America" },
+    { name: "Norte America", image: "america.jpg", apiName: "North America" },
+    { name: "Sur America", image: "surAmerica.jpg", apiName: "South America" },
     { name: "Asia", image: "asia.jpg", apiName: "Asia" },
     { name: "Oceania", image: "oceania.jpg", apiName: "Oceania" },
     { name: "Africa", image: "africa.jpg", apiName: "Africa" },
@@ -40,8 +50,45 @@ const CountryList = () => {
         selectedContinents.filter((continent) => continent !== continentApiName)
       );
     } else {
-      setSelectedContinents([...selectedContinents, continentApiName]);
+      if (continentApiName === "America") {
+        const continentesAmerica = ["South America", "North America"];
+        setSelectedContinents([...selectedContinents, ...continentesAmerica]);
+      } else {
+        setSelectedContinents([...selectedContinents, continentApiName]);
+      }
     }
+  };
+
+  const handleOpenCountryDetails = (countrySelect) => {
+    const continent = countrySelect.currentTarget.dataset.continent;
+    const currency = countrySelect.currentTarget.dataset.currency;
+    const capital = countrySelect.currentTarget.dataset.capital;
+
+    const statesString = countrySelect.currentTarget.dataset.states;
+    const statesArray = JSON.parse(statesString);
+
+    const languagesString = countrySelect.currentTarget.dataset.languages;
+    const languagesArray = JSON.parse(languagesString);
+
+    const image = countrySelect.currentTarget.dataset.image;
+
+    const details = {
+      name: countrySelect.target.id,
+      continent: continent,
+      currency: currency,
+      capital: capital,
+      states: statesArray,
+      languages: languagesArray[0].name,
+      image: image,
+    };
+
+    setNodal(true);
+    setCountryDetails(details);
+  };
+  console.log(countryDetails.states)
+
+  const handleCloseCountryDetails = () => {
+    setNodal(!nodal);
   };
 
   const handleInputClick = () => {
@@ -53,12 +100,10 @@ const CountryList = () => {
   };
 
   const filterCountries = data?.countries?.filter((country) => {
-    // Filtrar por nombre del país
     const matchesName = country.name
       .toLowerCase()
       .includes(searchCountry.toLowerCase());
 
-    // Filtrar por continente seleccionado (si hay continentes seleccionados)
     const matchesContinent =
       selectedContinents.length === 0 ||
       selectedContinents.includes(country.continent.name);
@@ -66,19 +111,12 @@ const CountryList = () => {
     return matchesName && matchesContinent;
   });
 
-  const getFormattedContinentName = (nameContinent) => {
-    // Lógica para formatear el nombre del continente
-    if (nameContinent.includes('America')) return 'America';
-    
-    return nameContinent;
-  };
-
   useEffect(() => {
     const KEY = "41000778-1453bd970fbac54f9157b298c";
 
     const fetchImages = async () => {
       const images = {};
-
+      // console.log(data)
       for (const country of data.countries) {
         try {
           const response = await axios.get(
@@ -107,13 +145,13 @@ const CountryList = () => {
     <main>
       <form onSubmit={(e) => e.preventDefault()} className="search">
         <div>
-          <p>Pais</p>
+          <p>País</p>
           <input
             type="text"
             id="paisSearch"
             onChange={handleSearch}
             value={searchCountry}
-            placeholder="Buscar pais..."
+            placeholder="Buscar país..."
             autoComplete="off"
             onClick={handleInputClick}
           />
@@ -144,33 +182,89 @@ const CountryList = () => {
             ))}
           </ul>
         </section>
-        <button className="btnSearch">Buscar</button>
+        <div className="btnSearch">
+          <i className="bx bx-search-alt-2 iconSearch"></i>
+          <button className="btnSearch">Buscar</button>
+        </div>
       </form>
-      <section className="countries">
-        {loading ? (
-          <h2>Cargando datos</h2>
-        ) : (
+
+      <article
+        className={
+          nodal ? "countryDetails countryDetails__onn" : "countryDetails"
+        }
+      >
+        <button
+          onClick={handleCloseCountryDetails}
+          className="countryDetails__close"
+        >
+          X
+        </button>
+        <div>
+          <img src={countryDetails.image} alt="" />
+          <div className="countryDetails__title">
+            Bandera
+            <div>
+              <h4>{countryDetails.name}</h4>
+              <p>{countryDetails.continent}</p>
+            </div>
+          </div>
+          <h4>
+            Capital:{" "}
+            <span className="countryDetails__span">
+              {countryDetails.capital}
+            </span>
+          </h4>
+          <h4>
+            Language:{" "}
+            <span className="countryDetails__span">
+              {countryDetails.languages}
+            </span>
+          </h4>
+          <h4>
+            Currency:{" "}
+            <span className="countryDetails__span">
+              {countryDetails.currency}
+            </span>
+          </h4>
+          <h4>Population:</h4>
+          <ul className="statesNodal">Region: {countryDetails.states.map((state) => (
+            <span className="countryDetails__span__nodal">{state.name}, </span>
+          ))}</ul>
+        </div>
+      </article>
+      {loading ? (
+        <h1>Cargando...</h1>
+      ) : (
+        <section className="countries">
           <ul className="countriesList">
             {filterCountries?.map((country) => (
               <li
                 key={country.name}
+                id={country.name}
                 style={{
                   backgroundImage: `url(${countryImages[country.name]})`,
                 }}
                 className="country"
+                onClick={handleOpenCountryDetails}
+                data-continent={country.continent.name}
+                data-capital={country.capital}
+                data-languages={JSON.stringify(country.languages)}
+                data-currency={country.currency}
+                data-states={JSON.stringify(country.states)}
+                data-image={countryImages[country.name]}
               >
                 <div className="title">
                   <div>BANDERA</div>
                   <div>
                     <h4>{country.name}</h4>
-                    <p>{getFormattedContinentName(country.continent.name)}</p>
+                    <p>{country.continent.name}</p>
                   </div>
                 </div>
               </li>
             ))}
           </ul>
-        )}
-      </section>
+        </section>
+      )}
     </main>
   );
 };

@@ -17,3 +17,92 @@ p {
   font-size: 25px;
   margin: 0;
 }
+
+/* Opciones */
+
+.btnOpenOptions {
+  position: fixed;
+  background-color: rgba(40, 245, 40, 0.72);
+  color: white;
+  font-size: 50px;
+  border-radius: 20px;
+  padding: 10px;
+  z-index: 100px;
+  backdrop-filter: blur(10px);
+  top: 40%;
+  cursor: pointer;
+  width: 70px;
+}
+
+.btnOpenOptions__off {
+  display: none;
+}
+
+.btnCloseOptions {
+  position: absolute;
+  background-color: rgba(245, 40, 40, 0.72);
+  color: white;
+  font-size: 50px;
+  border-radius: 20px;
+  padding: 10px;
+  z-index: 100px;
+  backdrop-filter: blur(10px);
+  top: 40%;
+  right: 0;
+  cursor: pointer;
+  width: 70px;
+}
+
+
+.menuOptions {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  background-color: rgb(13, 51, 127);
+  left: 0;
+  transition: 0.5s;
+  max-width: 450px;
+  padding: 30px;
+}
+
+.menuOptions__off {
+  left: -100%;
+}
+
+.menuOptions ul {
+  padding: 20px;
+}
+
+.li__notSelected {
+  list-style: none;
+  color: white;
+  font-size: 30px;
+  font-weight: bold
+
+}
+
+.li__selected {
+  list-style: none;
+  color: rgb(150, 150, 150);
+  font-size: 30px;
+  font-weight: bold;
+  background-color: white;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.logo {
+  font-size: 50px;
+  font-weight: bold;
+  width: 100%;
+  background-color: white;
+  text-align: center;
+  border-radius: 20px;
+}
+
+.vista {
+  text-align: center;
+  position: static;
+}
+
+
