@@ -15,4 +15,7 @@ Este proyecto React, denominado "Países del Mundo", utiliza tecnologías modern
 - **Búsqueda de Países:** Busca países por nombre de manera eficiente.
 - **Filtrado por Continente:** Filtra países según el continente al que pertenecen.
 - **Visualización Detallada:** Proporciona información detallada sobre un país seleccionado, incluyendo su capital, idioma, moneda y regiones.
-- **Responsive** 
+- **Responsive**
+
+
+## Las imagenes tardan un poco en cargar 
